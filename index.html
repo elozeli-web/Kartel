@@ -57,7 +57,7 @@ img,canvas{image-rendering:pixelated;image-rendering:-moz-crisp-edges;image-rend
 #pics img.in{animation:popin .35s steps(4)}
 @keyframes popin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 #ribbon{position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(transparent,rgba(0,0,0,.75) 40%);color:var(--pk2);letter-spacing:.3em;font-size:.95em;white-space:nowrap}
+  background:linear-gradient(transparent,rgba(0,0,0,.75) 40%);color:var(--pk2);letter-spacing:.18em;font-size:.9em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 10px}
 
 /* ---------- TREŚĆ ---------- */
 #main{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
@@ -177,9 +177,10 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;background:var(--amb)
 .endimg{display:flex;gap:0;justify-content:center}
 .big{font-size:1.4em;color:var(--pk3);letter-spacing:.12em;line-height:1.4}
 
-#toast{position:fixed;left:50%;top:calc(var(--safeT) + 86px);z-index:40;transform:translate(-50%,-20px);opacity:0;pointer-events:none;
-  background:#140e05;border:2px solid var(--amb);color:var(--amb);padding:10px 14px;transition:all .25s;white-space:nowrap;font-size:.85em}
-#toast.on{opacity:1;transform:translate(-50%,0)}
+#toast{position:fixed;left:12px;right:12px;max-width:496px;margin:0 auto;top:120px;z-index:40;transform:translateY(-12px);opacity:0;pointer-events:none;
+  background:#140e05;border:2px solid var(--amb);color:var(--amb);padding:10px 14px;transition:opacity .25s,transform .25s;
+  white-space:normal;text-align:center;line-height:1.45;font-size:.85em;box-shadow:0 6px 18px rgba(0,0,0,.6)}
+#toast.on{opacity:1;transform:none}
 #ovm{position:fixed;inset:0;z-index:35;background:rgba(3,2,8,.72);display:flex;align-items:center;justify-content:center;padding:18px}
 #ovm.hide{display:none}
 #ovm .card{width:min(360px,100%)}
@@ -401,7 +402,7 @@ function layoutScene(anim){
 }
 addEventListener('resize',()=>layoutScene(false));
 function page(){main.innerHTML='';main.scrollTop=0;return main}
-function toast(t,ms=1800){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(()=>e.classList.remove('on'),ms)}
+function toast(t,ms=1800){const e=$('toast');e.textContent=t;e.style.top=Math.max(8,$('scene').getBoundingClientRect().top+10)+'px';e.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(()=>e.classList.remove('on'),ms)}
 
 // kafelki → Promise(indeks)
 function tiles(items,parent=main){
